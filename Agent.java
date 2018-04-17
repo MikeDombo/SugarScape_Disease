@@ -31,18 +31,43 @@ public class Agent {
         eventList.add(new Event(birthTime + maxAge, "death", id));
     }
 
+    private boolean immuneTo(Disease d){
+        return HammingDistance.getMinHammingDistance(immuneSystem, d.getGenome())[0] == 0;
+    }
+
     public void immuneResponse(){
-        // TODO
-        // Find minimum hamming distance and then change our immune system to attack the first disease
-        // If we get the distance to 0, then move the disease to carrying and subtract the metabolic penalty
-        // Check diseases that we are carrying and see if we are infected again since the immune system was changed
+        immuneSystem = HammingDistance.closerByOne(immuneSystem, infectedWith.iterator().next().getGenome());
+        for(Disease d : infectedWith){
+            if(immuneTo(d)){
+                metabolicRate -= d.getMetabolicPenalty();
+                carrying.add(d);
+                infectedWith.remove(d);
+            }
+        }
+    }
+
+    public void randomMutateImmuneSystem(Random rng){
+        int i = rng.nextInt(immuneSystem.length());
+        if(immuneSystem.charAt(i) == '0'){
+            immuneSystem = replaceAt(immuneSystem, i, '1');
+        }
+        else{
+            immuneSystem = replaceAt(immuneSystem, i, '0');
+        }
+    }
+
+    private String replaceAt(String a, int location, char replacement){
+        String s = a.substring(0, location);
+        s += replacement;
+        s += a.substring(location+1);
+        return s;
     }
 
     public void infectWith(Disease d){
-        if(!carrying.contains(d) // || we are not immune
-        ){
+        if(!immuneTo(d)){
             infectedWith.add(d);
             metabolicRate += d.getMetabolicPenalty();
+            carrying.remove(d);
         }
     }
 
@@ -78,7 +103,7 @@ public class Agent {
         lastCollectedResources = time;
     }
 
-    public void move(Landscape landscape, double time){
+    public void move(Landscape landscape, ArrayList<Agent> agentList, Random rng, double time){
         ArrayList<Cell> lookNorth = new ArrayList<>();
         ArrayList<Cell> lookSouth = new ArrayList<>();
         ArrayList<Cell> lookEast = new ArrayList<>();
@@ -146,7 +171,35 @@ public class Agent {
         selectedCell.setOccupied(true);
         this.setRowCol(selectedCell.getRow(), selectedCell.getCol());
 
-        // TODO: Add give and take infection at this point
+        ArrayList<Cell> neighbors = new ArrayList<>();
+        neighbors.add(landscape.getCellAt(this.row + 1, this.col));
+        neighbors.add(landscape.getCellAt(this.row - 1, this.col));
+        neighbors.add(landscape.getCellAt(this.row, this.col + 1));
+        neighbors.add(landscape.getCellAt(this.row, this.col - 1));
+
+        ArrayList<Disease> newDiseases = new ArrayList<>();
+
+        for(Agent neighbor : agentList){
+            for(Cell c : neighbors){
+                if(neighbor.getCol() == c.getCol() && neighbor.getRow() == c.getRow()){
+                    neighbor.infectWith(getRandomDisease());
+                    newDiseases.add(neighbor.getRandomDisease());
+                }
+            }
+        }
+
+        infectWith(newDiseases.get(rng.nextInt(newDiseases.size())));
+    }
+
+    private Disease getRandomDisease(){
+        ArrayList<Disease> myDiseases = new ArrayList<>();
+        myDiseases.addAll(infectedWith);
+        myDiseases.addAll(carrying);
+        if(myDiseases.size() <= 0){
+            return  null;
+        }
+        Random rng = new Random();
+        return myDiseases.get(rng.nextInt(myDiseases.size()));
     }
 
     public int distance(Cell c, Landscape l){

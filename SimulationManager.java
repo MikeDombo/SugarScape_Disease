@@ -139,7 +139,7 @@ class SimulationManager extends GUIManager {
                 for (Agent agent : agentList) {
                     if (agent.getID().equals(next.getTarget())) {
                         // Move
-                        agent.move(landscape, this.time);
+                        agent.move(landscape, agentList, rng, this.time);
                         // Eat, deplete cell resources, compute wealth from resouces and metabolic rate
                         Cell currentCell = landscape.getCellAt(agent.getRow(), agent.getCol());
                         agent.collectResources(currentCell, this.time);
