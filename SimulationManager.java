@@ -10,21 +10,12 @@ class SimulationManager extends GUIManager {
     private final int WINDOW_HEIGHT = 500;
 
     protected ArrayList<Agent> agentList;
-    // A list of all agents in the simulation; this is declared as
-    // protected because we access it directly from within AgentCanvas.
-    // Why?  Because we only access it to draw the agents, and given
-    // that the list may be large, it doesn't make sense to
-    // make a copy and return that copy to AgentCanvas.
-
     protected Landscape landscape;
-
     protected int gridSize;
     private AgentCanvas canvas;  // the canvas on which agents are drawn
     private Random rng;
     private int nextAgentID = 0;
-
     private PriorityQueue<Event> eventCalendar = new PriorityQueue<>();
-
     private double time;  // the simulation time
 
     private double uniform(int a, int b) {
@@ -34,6 +25,18 @@ class SimulationManager extends GUIManager {
     private double exponential(double lambda) {
         double ret = Math.log(1 - rng.nextDouble()) / (-lambda);
         return ret;
+    }
+
+    private int rand01(){
+        return rng.nextInt(2);
+    }
+
+    private String rand01String(int length){
+        StringBuilder s = new StringBuilder();
+        for(int i = 0; i < length; i++){
+            s.append(rand01());
+        }
+        return s.toString();
     }
 
     //======================================================================

@@ -1,8 +1,10 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Agent {
+    private String immuneSystem;
+    private HashSet<Disease> infectedWith = new HashSet<>();
+    private HashSet<Disease> carrying = new HashSet<>();
+
     private double birthTime;
     private String id;   // identifier for the agent
     private int row;
@@ -14,7 +16,7 @@ public class Agent {
     private double lastCollectedResources;
     private PriorityQueue<Event> eventList = new PriorityQueue<>();
 
-    public Agent(String id, int vision, double metabolicRate, double initialWealth, double maxAge, double birthTime) {
+    public Agent(String id, int vision, double metabolicRate, double initialWealth, double maxAge, double birthTime, String immuneSystem) {
         this.id = id;
         this.vision = vision;
         this.metabolicRate = metabolicRate;
@@ -23,9 +25,21 @@ public class Agent {
         this.wealth = initialWealth;
         this.birthTime = birthTime;
         this.lastCollectedResources = birthTime;
+        this.immuneSystem = immuneSystem;
 
         // Schedule death
         eventList.add(new Event(birthTime + maxAge, "death", id));
+    }
+
+    public void immuneResponse(){
+
+    }
+
+    public void infectWith(Disease d){
+        if(!carrying.contains(d)){
+            infectedWith.add(d);
+            metabolicRate += d.getMetabolicPenalty();
+        }
     }
 
     public void scheduleNewEvent(Event e){
