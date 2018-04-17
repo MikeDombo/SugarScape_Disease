@@ -32,11 +32,14 @@ public class Agent {
     }
 
     public void immuneResponse(){
-
+        // Find minimum hamming distance and then change our immune system to attack the first disease
+        // If we get the distance to 0, then move the disease to carrying and subtract the metabolic penalty
+        // Check diseases that we are carrying and see if we are infected again since the immune system was changed
     }
 
     public void infectWith(Disease d){
-        if(!carrying.contains(d)){
+        if(!carrying.contains(d) // || we are not immune
+        ){
             infectedWith.add(d);
             metabolicRate += d.getMetabolicPenalty();
         }
