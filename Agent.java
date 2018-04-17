@@ -36,13 +36,14 @@ public class Agent {
     }
 
     public void immuneResponse(boolean change){
-        if(change) {
-            immuneSystem = HammingDistance.closerByOne(immuneSystem, infectedWith.iterator().next().getGenome());
+        if(change && infectedWith.size() > 0) {
+            immuneSystem = HammingDistance.closerByOne(immuneSystem, ((Disease) infectedWith.toArray()[0]).getGenome());
         }
         for(Disease d : infectedWith){
             if(immuneTo(d)){
                 metabolicRate -= d.getMetabolicPenalty();
                 carrying.add(d);
+                // TODO: FIX THIS
                 infectedWith.remove(d);
             }
         }
@@ -68,7 +69,7 @@ public class Agent {
     }
 
     public void infectWith(Disease d){
-        if(!immuneTo(d)){
+        if(d != null && !immuneTo(d)){
             infectedWith.add(d);
             metabolicRate += d.getMetabolicPenalty();
             carrying.remove(d);
@@ -192,7 +193,9 @@ public class Agent {
             }
         }
 
-        infectWith(newDiseases.get(rng.nextInt(newDiseases.size())));
+        if(newDiseases.size() > 0){
+            infectWith(newDiseases.get(rng.nextInt(newDiseases.size())));
+        }
     }
 
     private Disease getRandomDisease(){
@@ -200,7 +203,7 @@ public class Agent {
         myDiseases.addAll(infectedWith);
         myDiseases.addAll(carrying);
         if(myDiseases.size() <= 0){
-            return  null;
+            return null;
         }
         Random rng = new Random();
         return myDiseases.get(rng.nextInt(myDiseases.size()));
