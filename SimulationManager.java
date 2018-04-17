@@ -12,6 +12,7 @@ class SimulationManager extends GUIManager {
     protected ArrayList<Agent> agentList;
     protected Landscape landscape;
     protected int gridSize;
+    private ArrayList<Disease> diseaseList = new ArrayList<>();
     private AgentCanvas canvas;  // the canvas on which agents are drawn
     private Random rng;
     private int nextAgentID = 0;
@@ -59,8 +60,13 @@ class SimulationManager extends GUIManager {
         for (int i = 0; i < numAgents; i++) {
             generateAgent();
         }
+
+        for (int i = 0; i < 12; i++){
+            diseaseList.add(new Disease(rand01String(rng.nextInt(10)+1), rng.nextDouble()));
+        }
+
         for(Agent a : agentList){
-            a.infectWith(new Disease(rand01String(rng.nextInt(10)+1), rng.nextDouble()));
+            a.infectWith(diseaseList.get(rng.nextInt(diseaseList.size())));
         }
 
         this.createWindow();
@@ -114,6 +120,8 @@ class SimulationManager extends GUIManager {
 
         a.scheduleNewEvent(new Event(this.time + exponential(1), "move", a.getID()));
         eventCalendar.add(a.getNextEvent());
+
+        // TODO: Schedule immune response event with some randomness
 
         return a;
     }

@@ -32,6 +32,7 @@ public class Agent {
     }
 
     public void immuneResponse(){
+        // TODO
         // Find minimum hamming distance and then change our immune system to attack the first disease
         // If we get the distance to 0, then move the disease to carrying and subtract the metabolic penalty
         // Check diseases that we are carrying and see if we are infected again since the immune system was changed
@@ -144,6 +145,8 @@ public class Agent {
         landscape.getCellAt(this.row, this.col).setOccupied(false);
         selectedCell.setOccupied(true);
         this.setRowCol(selectedCell.getRow(), selectedCell.getCol());
+
+        // TODO: Add give and take infection at this point
     }
 
     public int distance(Cell c, Landscape l){
