@@ -59,6 +59,9 @@ class SimulationManager extends GUIManager {
         for (int i = 0; i < numAgents; i++) {
             generateAgent();
         }
+        for(Agent a : agentList){
+            a.infectWith(new Disease(rand01String(rng.nextInt(10)+1), rng.nextDouble()));
+        }
 
         this.createWindow();
         this.run();
@@ -101,7 +104,7 @@ class SimulationManager extends GUIManager {
 
     private Agent generateAgent() {
         Agent a = new Agent("agent " + (nextAgentID++), rng.nextInt(6) + 1,
-                uniform(1, 4), uniform(5, 25), uniform(60, 100), this.time);
+                uniform(1, 4), uniform(5, 25), uniform(60, 100), this.time, rand01String(50));
         agentList.add(a);
 
         int[] nextUnoccupied = getNewUnoccupiedCell(gridSize);
