@@ -35,8 +35,10 @@ public class Agent {
         return HammingDistance.getMinHammingDistance(immuneSystem, d.getGenome())[0] == 0;
     }
 
-    public void immuneResponse(){
-        immuneSystem = HammingDistance.closerByOne(immuneSystem, infectedWith.iterator().next().getGenome());
+    public void immuneResponse(boolean change){
+        if(change) {
+            immuneSystem = HammingDistance.closerByOne(immuneSystem, infectedWith.iterator().next().getGenome());
+        }
         for(Disease d : infectedWith){
             if(immuneTo(d)){
                 metabolicRate -= d.getMetabolicPenalty();
@@ -54,6 +56,8 @@ public class Agent {
         else{
             immuneSystem = replaceAt(immuneSystem, i, '0');
         }
+
+        immuneResponse(false);
     }
 
     private String replaceAt(String a, int location, char replacement){

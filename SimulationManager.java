@@ -28,13 +28,13 @@ class SimulationManager extends GUIManager {
         return ret;
     }
 
-    private int rand01(){
+    private int rand01() {
         return rng.nextInt(2);
     }
 
-    private String rand01String(int length){
+    private String rand01String(int length) {
         StringBuilder s = new StringBuilder();
-        for(int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++) {
             s.append(rand01());
         }
         return s.toString();
@@ -61,11 +61,11 @@ class SimulationManager extends GUIManager {
             generateAgent();
         }
 
-        for (int i = 0; i < 12; i++){
-            diseaseList.add(new Disease(rand01String(rng.nextInt(10)+1), rng.nextDouble()));
+        for (int i = 0; i < 12; i++) {
+            diseaseList.add(new Disease(rand01String(rng.nextInt(10) + 1), rng.nextDouble()));
         }
 
-        for(Agent a : agentList){
+        for (Agent a : agentList) {
             a.infectWith(diseaseList.get(rng.nextInt(diseaseList.size())));
         }
 
@@ -119,9 +119,9 @@ class SimulationManager extends GUIManager {
         landscape.getCellAt(nextUnoccupied[0], nextUnoccupied[1]).setOccupied(true);
 
         a.scheduleNewEvent(new Event(this.time + exponential(1), "move", a.getID()));
+        a.scheduleNewEvent(new Event(this.time + exponential(1), "mutate", a.getID()));
+        a.scheduleNewEvent(new Event(this.time + exponential(1), "immuneResponse", a.getID()));
         eventCalendar.add(a.getNextEvent());
-
-        // TODO: Schedule immune response event with some randomness
 
         return a;
     }
@@ -167,9 +167,9 @@ class SimulationManager extends GUIManager {
                 }
             } else if (next.getType().equals("death")) {
                 String deathID = next.getTarget();
-                for(Agent a : agentList){
-                    if(a.getID().equals(deathID)){
-                        Cell c = landscape.getCellAt(a.getRow(),a.getCol());
+                for (Agent a : agentList) {
+                    if (a.getID().equals(deathID)) {
+                        Cell c = landscape.getCellAt(a.getRow(), a.getCol());
                         a.collectResources(c, this.time);
                         c.setOccupied(false);
                     }
@@ -177,6 +177,28 @@ class SimulationManager extends GUIManager {
                 agentList.removeIf(a -> a.getID().equals(deathID));
                 eventCalendar.removeIf(e -> e.getTarget().equals(deathID));
                 generateAgent();
+            } else if (next.getType().equals("mutate")) {
+                String aID = next.getTarget();
+                for (Agent a : agentList) {
+                    if (a.getID().equals(aID)) {
+                        a.randomMutateImmuneSystem(rng);
+
+                        a.scheduleNewEvent(new Event(this.time + exponential(1), "mutate", aID));
+                        eventCalendar.add(a.getNextEvent());
+                        break;
+                    }
+                }
+            } else if (next.getType().equals("immuneResponse")) {
+                String aID = next.getTarget();
+                for (Agent a : agentList) {
+                    if (a.getID().equals(aID)) {
+                        a.immuneResponse(true);
+
+                        a.scheduleNewEvent(new Event(this.time + exponential(1), "immuneResponse", aID));
+                        eventCalendar.add(a.getNextEvent());
+                        break;
+                    }
+                }
             }
 
             canvas.repaint();
