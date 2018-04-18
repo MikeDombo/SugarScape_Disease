@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69bcfd6-4b6a-48f0-8c51-03f6b476f627" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimulationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/SimulationManager.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,21 +17,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SimulationManager.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SimulationManager.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/SimulationManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="197" column="46" selection-start-line="197" selection-start-column="46" selection-end-line="197" selection-end-column="46" />
+            <state relative-caret-position="239">
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1008#1009#0" expanded="true" />
-                <element signature="e#1063#1064#0" expanded="true" />
+                <element signature="e#848#849#0" expanded="true" />
+                <element signature="e#913#914#0" expanded="true" />
                 <element signature="e#967#968#0" expanded="true" />
                 <element signature="e#1004#1005#0" expanded="true" />
-                <element signature="e#3089#3090#0" expanded="true" />
-                <element signature="e#3125#3126#0" expanded="true" />
-                <element signature="e#3156#3157#0" expanded="true" />
-                <element signature="e#3188#3189#0" expanded="true" />
+                <element signature="method#SimulationManager#0;class#SimulationManager#0" />
+                <element signature="method#getNewUnoccupiedCell#0;class#SimulationManager#0" />
                 <element signature="e#8805#8806#0" expanded="true" />
                 <element signature="e#8860#8861#0" expanded="true" />
               </folding>
@@ -36,29 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Agent.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Agent.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Agent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
-              <folding>
-                <element signature="e#2419#2420#0" expanded="true" />
-                <element signature="e#2451#2452#0" expanded="true" />
-                <element signature="e#2486#2487#0" expanded="true" />
-                <element signature="e#2525#2526#0" expanded="true" />
-                <element signature="e#2589#2590#0" expanded="true" />
-                <element signature="e#2620#2621#0" expanded="true" />
-                <element signature="e#2647#2648#0" expanded="true" />
-                <element signature="e#2678#2679#0" expanded="true" />
-                <element signature="e#2707#2708#0" expanded="true" />
-                <element signature="e#2737#2738#0" expanded="true" />
-                <element signature="e#7531#7532#0" expanded="true" />
-                <element signature="e#7560#7561#0" expanded="true" />
-                <element signature="e#7593#7594#0" expanded="true" />
-                <element signature="e#7627#7628#0" expanded="true" />
-                <element signature="e#7732#7733#0" expanded="true" />
-                <element signature="e#7764#7765#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="85">
+              <caret line="43" column="28" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -66,8 +49,8 @@
       <file leaf-file-name="HammingDistance.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/HammingDistance.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="33" column="20" lean-forward="true" selection-start-line="33" selection-start-column="20" selection-end-line="35" selection-end-column="42" />
+            <state relative-caret-position="561">
+              <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="35" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -97,8 +80,8 @@
       <list>
         <option value="$PROJECT_DIR$/Disease.java" />
         <option value="$PROJECT_DIR$/HammingDistance.java" />
-        <option value="$PROJECT_DIR$/SimulationManager.java" />
         <option value="$PROJECT_DIR$/Agent.java" />
+        <option value="$PROJECT_DIR$/SimulationManager.java" />
       </list>
     </option>
   </component>
@@ -122,6 +105,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -133,9 +119,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -224,15 +207,16 @@
       <option name="presentableId" value="Default" />
       <updated>1523986240138</updated>
       <workItem from="1523986242910" duration="210000" />
-      <workItem from="1523986477960" duration="4982000" />
+      <workItem from="1523986477960" duration="4999000" />
+      <workItem from="1524061511840" duration="507000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5192000" />
+    <option name="totallyTimeSpent" value="5716000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1536" height="824" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -245,13 +229,12 @@
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33614627" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3351724" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17871222" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17838542" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="2" />
@@ -263,6 +246,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,18 +258,48 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/SimulationManager.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3349">
+          <caret line="197" column="46" selection-start-line="197" selection-start-column="46" selection-end-line="197" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#848#849#0" expanded="true" />
+            <element signature="e#913#914#0" expanded="true" />
+            <element signature="e#967#968#0" expanded="true" />
+            <element signature="e#1004#1005#0" expanded="true" />
+            <element signature="method#SimulationManager#0;class#SimulationManager#0" />
+            <element signature="method#getNewUnoccupiedCell#0;class#SimulationManager#0" />
+            <element signature="e#8805#8806#0" expanded="true" />
+            <element signature="e#8860#8861#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HammingDistance.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="20" lean-forward="true" selection-start-line="33" selection-start-column="20" selection-end-line="35" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Agent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimulationManager.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1008#1009#0" expanded="true" />
-            <element signature="e#1063#1064#0" expanded="true" />
+            <element signature="e#848#849#0" expanded="true" />
+            <element signature="e#913#914#0" expanded="true" />
             <element signature="e#967#968#0" expanded="true" />
             <element signature="e#1004#1005#0" expanded="true" />
-            <element signature="e#3089#3090#0" expanded="true" />
-            <element signature="e#3125#3126#0" expanded="true" />
-            <element signature="e#3156#3157#0" expanded="true" />
-            <element signature="e#3188#3189#0" expanded="true" />
+            <element signature="method#SimulationManager#0;class#SimulationManager#0" />
+            <element signature="method#getNewUnoccupiedCell#0;class#SimulationManager#0" />
             <element signature="e#8805#8806#0" expanded="true" />
             <element signature="e#8860#8861#0" expanded="true" />
           </folding>
@@ -307,52 +321,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/HammingDistance.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="33" column="20" lean-forward="true" selection-start-line="33" selection-start-column="20" selection-end-line="35" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SimulationManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="197" column="46" selection-start-line="197" selection-start-column="46" selection-end-line="197" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1008#1009#0" expanded="true" />
-            <element signature="e#1063#1064#0" expanded="true" />
-            <element signature="e#967#968#0" expanded="true" />
-            <element signature="e#1004#1005#0" expanded="true" />
-            <element signature="e#3089#3090#0" expanded="true" />
-            <element signature="e#3125#3126#0" expanded="true" />
-            <element signature="e#3156#3157#0" expanded="true" />
-            <element signature="e#3188#3189#0" expanded="true" />
-            <element signature="e#8805#8806#0" expanded="true" />
-            <element signature="e#8860#8861#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="561">
+          <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="35" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Agent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
+        <state relative-caret-position="85">
+          <caret line="43" column="28" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SimulationManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
           <folding>
-            <element signature="e#2419#2420#0" expanded="true" />
-            <element signature="e#2451#2452#0" expanded="true" />
-            <element signature="e#2486#2487#0" expanded="true" />
-            <element signature="e#2525#2526#0" expanded="true" />
-            <element signature="e#2589#2590#0" expanded="true" />
-            <element signature="e#2620#2621#0" expanded="true" />
-            <element signature="e#2647#2648#0" expanded="true" />
-            <element signature="e#2678#2679#0" expanded="true" />
-            <element signature="e#2707#2708#0" expanded="true" />
-            <element signature="e#2737#2738#0" expanded="true" />
-            <element signature="e#7531#7532#0" expanded="true" />
-            <element signature="e#7560#7561#0" expanded="true" />
-            <element signature="e#7593#7594#0" expanded="true" />
-            <element signature="e#7627#7628#0" expanded="true" />
-            <element signature="e#7732#7733#0" expanded="true" />
-            <element signature="e#7764#7765#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#848#849#0" expanded="true" />
+            <element signature="e#913#914#0" expanded="true" />
+            <element signature="e#967#968#0" expanded="true" />
+            <element signature="e#1004#1005#0" expanded="true" />
+            <element signature="method#SimulationManager#0;class#SimulationManager#0" />
+            <element signature="method#getNewUnoccupiedCell#0;class#SimulationManager#0" />
+            <element signature="e#8805#8806#0" expanded="true" />
+            <element signature="e#8860#8861#0" expanded="true" />
           </folding>
         </state>
       </provider>

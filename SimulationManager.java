@@ -23,9 +23,8 @@ class SimulationManager extends GUIManager {
         return (rng.nextDouble() * (b - a)) + a;
     }
 
-    private double exponential(double lambda) {
-        double ret = Math.log(1 - rng.nextDouble()) / (-lambda);
-        return ret;
+    private double exponential(double rate) {
+        return Math.log(1 - rng.nextDouble()) / (-rate);
     }
 
     private int rand01() {
@@ -108,6 +107,14 @@ class SimulationManager extends GUIManager {
         return this.time;
     }
 
+    private Event getNewMutate(double time, String target){
+        return new Event(time + exponential(1), "mutate", target);
+    }
+
+    private Event getNewImmuneResponse(double time, String target){
+        return new Event(time + exponential(1), "immuneResponse", target);
+    }
+
     private Agent generateAgent() {
         Agent a = new Agent("agent " + (nextAgentID++), rng.nextInt(6) + 1,
                 uniform(1, 4), uniform(5, 25), uniform(60, 100), this.time, rand01String(50));
@@ -119,8 +126,8 @@ class SimulationManager extends GUIManager {
         landscape.getCellAt(nextUnoccupied[0], nextUnoccupied[1]).setOccupied(true);
 
         a.scheduleNewEvent(new Event(this.time + exponential(1), "move", a.getID()));
-        a.scheduleNewEvent(new Event(this.time + exponential(1), "mutate", a.getID()));
-        a.scheduleNewEvent(new Event(this.time + exponential(1), "immuneResponse", a.getID()));
+        a.scheduleNewEvent(getNewMutate(this.time, a.getID()));
+        a.scheduleNewEvent(getNewImmuneResponse(this.time, a.getID()));
         eventCalendar.add(a.getNextEvent());
 
         return a;
@@ -183,7 +190,7 @@ class SimulationManager extends GUIManager {
                     if (a.getID().equals(aID)) {
                         a.randomMutateImmuneSystem(rng);
 
-                        a.scheduleNewEvent(new Event(this.time + exponential(1), "mutate", aID));
+                        a.scheduleNewEvent(getNewMutate(this.time, aID));
                         eventCalendar.add(a.getNextEvent());
                         break;
                     }
@@ -194,7 +201,7 @@ class SimulationManager extends GUIManager {
                     if (a.getID().equals(aID)) {
                         a.immuneResponse(true);
 
-                        a.scheduleNewEvent(new Event(this.time + exponential(1), "immuneResponse", aID));
+                        a.scheduleNewEvent(getNewImmuneResponse(this.time, aID));
                         eventCalendar.add(a.getNextEvent());
                         break;
                     }

@@ -39,14 +39,15 @@ public class Agent {
         if(change && infectedWith.size() > 0) {
             immuneSystem = HammingDistance.closerByOne(immuneSystem, ((Disease) infectedWith.toArray()[0]).getGenome());
         }
+        ArrayList<Disease> toRemove = new ArrayList<>();
         for(Disease d : infectedWith){
             if(immuneTo(d)){
                 metabolicRate -= d.getMetabolicPenalty();
                 carrying.add(d);
-                // TODO: FIX THIS
-                infectedWith.remove(d);
+                toRemove.add(d);
             }
         }
+        toRemove.forEach(d -> infectedWith.remove(d));
     }
 
     public void randomMutateImmuneSystem(Random rng){
