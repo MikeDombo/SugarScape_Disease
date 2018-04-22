@@ -1,20 +1,22 @@
-public class Cell implements Comparable{
+public class Cell implements Comparable {
 
-    private double resourceCapacity;
-    private double regrowthRate;
+    private final double resourceCapacity;
+    private final double regrowthRate;
     private double lastTimeDepleted = 0;
     private boolean occupied;
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
-    public Cell(double regrowthRate, double resourceCapacity, int x, int y){
+    public Cell(double regrowthRate, double resourceCapacity, int x, int y) {
         this.resourceCapacity = resourceCapacity;
         this.regrowthRate = regrowthRate;
         this.x = x;
         this.y = y;
     }
 
-    public double getRegrowthRate() { return this.regrowthRate; }
+    public double getRegrowthRate() {
+        return this.regrowthRate;
+    }
 
     public int getRow() {
         return this.x;
@@ -24,7 +26,7 @@ public class Cell implements Comparable{
         return this.y;
     }
 
-    public double getCapacity(){
+    public double getCapacity() {
         return this.resourceCapacity;
     }
 
@@ -37,10 +39,10 @@ public class Cell implements Comparable{
     }
 
     public double getResourceLevel(double time) {
-        return Math.min(this.resourceCapacity, (time-lastTimeDepleted) * this.regrowthRate);
+        return Math.min(this.resourceCapacity, (time - lastTimeDepleted) * this.regrowthRate);
     }
 
-    public double removeResources(double time){
+    public double removeResources(double time) {
         double eaten = getResourceLevel(time);
         lastTimeDepleted = time;
         return eaten;
@@ -48,10 +50,10 @@ public class Cell implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        if(!(o instanceof Cell)){
+        if (!(o instanceof Cell)) {
             return 0;
         }
-        if(this.resourceCapacity == ((Cell) o).getCapacity()){
+        if (this.resourceCapacity == ((Cell) o).getCapacity()) {
             return 0;
         }
         return (this.getCapacity() > ((Cell) o).getCapacity()) ? 1 : -1;

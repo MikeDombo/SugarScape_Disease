@@ -1,6 +1,6 @@
 public class Disease {
-    private String genome;
-    private double metabolicPenalty;
+    private final String genome;
+    private final double metabolicPenalty;
 
     public Disease(String genome, double metabolicPenalty) {
         this.genome = genome;

@@ -2,28 +2,24 @@ import java.util.*;
 
 public class Agent {
     private String immuneSystem;
-    private HashSet<Disease> infectedWith = new HashSet<>();
-    private HashSet<Disease> carrying = new HashSet<>();
+    private final HashSet<Disease> infectedWith = new HashSet<>();
+    private final HashSet<Disease> carrying = new HashSet<>();
 
-    private double birthTime;
-    private String id;   // identifier for the agent
+    private final String id;   // identifier for the agent
     private int row;
     private int col;
-    private int vision;
+    private final int vision;
     private double metabolicRate;
     private double wealth;
-    private double maxAge;
     private double lastCollectedResources;
-    private PriorityQueue<Event> eventList = new PriorityQueue<>();
+    private final PriorityQueue<Event> eventList = new PriorityQueue<>();
 
     public Agent(String id, int vision, double metabolicRate, double initialWealth, double maxAge, double birthTime, String immuneSystem) {
         this.id = id;
         this.vision = vision;
         this.metabolicRate = metabolicRate;
         this.wealth = 0;
-        this.maxAge = maxAge;
         this.wealth = initialWealth;
-        this.birthTime = birthTime;
         this.lastCollectedResources = birthTime;
         this.immuneSystem = immuneSystem;
 
@@ -31,53 +27,50 @@ public class Agent {
         eventList.add(new Event(birthTime + maxAge, "death", id));
     }
 
-    private boolean immuneTo(Disease d){
+    private boolean immuneTo(Disease d) {
         return HammingDistance.getMinHammingDistance(immuneSystem, d.getGenome())[0] == 0;
     }
 
-    public void immuneResponse(boolean change){
-        if(change && infectedWith.size() > 0) {
+    public void immuneResponse(boolean change) {
+        if (change && infectedWith.size() > 0) {
             immuneSystem = HammingDistance.closerByOne(immuneSystem, ((Disease) infectedWith.toArray()[0]).getGenome());
         }
         ArrayList<Disease> toRemove = new ArrayList<>();
-        for(Disease d : infectedWith){
-            if(immuneTo(d)){
-                metabolicRate -= d.getMetabolicPenalty();
-                carrying.add(d);
-                toRemove.add(d);
-            }
-        }
-        toRemove.forEach(d -> infectedWith.remove(d));
+        infectedWith.stream().filter(this::immuneTo).forEach(d -> {
+            metabolicRate -= d.getMetabolicPenalty();
+            carrying.add(d);
+            toRemove.add(d);
+        });
+        toRemove.forEach(infectedWith::remove);
     }
 
-    public void randomMutateImmuneSystem(Random rng){
+    public void randomMutateImmuneSystem(Random rng) {
         int i = rng.nextInt(immuneSystem.length());
-        if(immuneSystem.charAt(i) == '0'){
+        if (immuneSystem.charAt(i) == '0') {
             immuneSystem = replaceAt(immuneSystem, i, '1');
-        }
-        else{
+        } else {
             immuneSystem = replaceAt(immuneSystem, i, '0');
         }
 
         immuneResponse(false);
     }
 
-    private String replaceAt(String a, int location, char replacement){
+    private String replaceAt(String a, int location, char replacement) {
         String s = a.substring(0, location);
         s += replacement;
-        s += a.substring(location+1);
+        s += a.substring(location + 1);
         return s;
     }
 
-    public void infectWith(Disease d){
-        if(d != null && !immuneTo(d)){
+    public void infectWith(Disease d) {
+        if (d != null && !immuneTo(d)) {
             infectedWith.add(d);
             metabolicRate += d.getMetabolicPenalty();
             carrying.remove(d);
         }
     }
 
-    public void scheduleNewEvent(Event e){
+    public void scheduleNewEvent(Event e) {
         eventList.add(e);
     }
 
@@ -104,27 +97,27 @@ public class Agent {
         this.col = col;
     }
 
-    public void collectResources(Cell c, double time){
+    public void collectResources(Cell c, double time) {
         this.wealth = Math.max(0, this.wealth + c.removeResources(time) - (this.metabolicRate * (time - lastCollectedResources)));
         lastCollectedResources = time;
     }
 
-    public void move(Landscape landscape, ArrayList<Agent> agentList, Random rng, double time){
+    public void move(Landscape landscape, ArrayList<Agent> agentList, Random rng, double time) {
         ArrayList<Cell> lookNorth = new ArrayList<>();
         ArrayList<Cell> lookSouth = new ArrayList<>();
         ArrayList<Cell> lookEast = new ArrayList<>();
         ArrayList<Cell> lookWest = new ArrayList<>();
 
-        for(int i = this.row; i < this.row + this.vision; i++){
+        for (int i = this.row; i < this.row + this.vision; i++) {
             lookSouth.add(landscape.getCellAt(i, this.col));
         }
-        for(int i = this.row; i > this.row - this.vision; i--){
+        for (int i = this.row; i > this.row - this.vision; i--) {
             lookNorth.add(landscape.getCellAt(i, this.col));
         }
-        for(int i = this.col; i < this.col + this.vision; i++){
+        for (int i = this.col; i < this.col + this.vision; i++) {
             lookEast.add(landscape.getCellAt(this.row, i));
         }
-        for(int i = this.col; i > this.col - this.vision; i--){
+        for (int i = this.col; i > this.col - this.vision; i--) {
             lookWest.add(landscape.getCellAt(this.row, i));
         }
 
@@ -140,7 +133,7 @@ public class Agent {
         allOptions.addAll(lookWest);
 
         // Nowhere to move, just stay put
-        if(allOptions.size() <= 0){
+        if (allOptions.size() <= 0) {
             return;
         }
 
@@ -153,15 +146,15 @@ public class Agent {
         allOptions.removeIf(c -> c.getResourceLevel(time) < maxResourceLevel);
 
         Cell selectedCell = allOptions.get(0);
-        if(allOptions.size() > 1){
+        if (allOptions.size() > 1) {
             double minDist = Double.POSITIVE_INFINITY;
             ArrayList<Cell> minDistCells = new ArrayList<>();
-            for(Cell c : allOptions){
+            for (Cell c : allOptions) {
                 int dist = distance(c, landscape);
-                if(dist == minDist){
+                if (dist == minDist) {
                     minDistCells.add(c);
                 }
-                if(dist < minDist){
+                if (dist < minDist) {
                     minDist = dist;
                     minDistCells.clear();
                     minDistCells.add(c);
@@ -185,40 +178,39 @@ public class Agent {
 
         ArrayList<Disease> newDiseases = new ArrayList<>();
 
-        for(Agent neighbor : agentList){
-            for(Cell c : neighbors){
-                if(neighbor.getCol() == c.getCol() && neighbor.getRow() == c.getRow()){
-                    neighbor.infectWith(getRandomDisease());
-                    newDiseases.add(neighbor.getRandomDisease());
-                }
-            }
-        }
+        agentList.forEach(neighbor ->
+                neighbors.stream()
+                        .filter(c -> neighbor.getCol() == c.getCol() && neighbor.getRow() == c.getRow())
+                        .forEach(c -> {
+                            neighbor.infectWith(getRandomDisease());
+                            newDiseases.add(neighbor.getRandomDisease());
+                        })
+        );
 
-        if(newDiseases.size() > 0){
+        if (newDiseases.size() > 0) {
             infectWith(newDiseases.get(rng.nextInt(newDiseases.size())));
         }
     }
 
-    private Disease getRandomDisease(){
+    private Disease getRandomDisease() {
         ArrayList<Disease> myDiseases = new ArrayList<>();
         myDiseases.addAll(infectedWith);
         myDiseases.addAll(carrying);
-        if(myDiseases.size() <= 0){
+        if (myDiseases.size() <= 0) {
             return null;
         }
         Random rng = new Random();
         return myDiseases.get(rng.nextInt(myDiseases.size()));
     }
 
-    public int distance(Cell c, Landscape l){
+    public int distance(Cell c, Landscape l) {
         int size = l.getGridSize();
         int x = c.getRow();
         int y = c.getCol();
 
-        if(x == this.row){
+        if (x == this.row) {
             return Math.min(Math.abs(this.col - y), Math.abs(this.col - y - size));
-        }
-        else if(y == this.col){
+        } else if (y == this.col) {
             return Math.min(Math.abs(this.row - x), Math.abs(this.row - x - size));
         }
 
@@ -229,14 +221,8 @@ public class Agent {
         return wealth;
     }
 
-    public double getMaxAge() {
-        return this.maxAge;
-    }
-
-    public double getMetabolicRate() { return this.metabolicRate; }
-
-    public double getBirthTime() {
-        return birthTime;
+    public double getMetabolicRate() {
+        return this.metabolicRate;
     }
 }
 

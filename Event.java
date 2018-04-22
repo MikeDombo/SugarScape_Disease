@@ -1,7 +1,7 @@
-public class Event implements Comparable{
-    private double time;
-    private String type;
-    private String target;
+public class Event implements Comparable {
+    private final double time;
+    private final String type;
+    private final String target;
 
     public Event(double time, String type, String target) {
         this.time = time;

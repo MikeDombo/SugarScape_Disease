@@ -1,19 +1,8 @@
-import javax.swing.*;      // for all the Swing stuff (JWhatevers)
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.image.BufferedImage;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
-import javax.imageio.ImageIO;
+import java.util.stream.IntStream;
 
 
 //======================================================================
@@ -31,7 +20,7 @@ class AgentCanvas extends JPanel {
 
     private static final int agentGUISize = 10;
 
-    private SimulationManager simulation; // a reference to the simulation object
+    private final SimulationManager simulation; // a reference to the simulation object
 
     //======================================================================
     //* public AgentCanvas()
@@ -95,19 +84,19 @@ class AgentCanvas extends JPanel {
         // ensure that no changes are made to the original
         Graphics2D graphics = (Graphics2D) g.create();
 
-        JViewport viewport = null;
-        JScrollPane scrollPane = null;
-        Insets borders = null;
+        JViewport viewport;
+        JScrollPane scrollPane;
+        Insets borders;
 
-        int viewportWidth = 0;
-        int viewportHeight = 0;
+        int viewportWidth;
+        int viewportHeight;
         int agentSize = AgentCanvas.agentGUISize;
         int imageWidth = gridWidth * agentSize;
         int imageHeight = gridHeight * agentSize;
 
         // make sure that we're grabbing onto the viewport of the scroll pane
         Component ancestor = getParent();
-        if (ancestor == null || !(ancestor instanceof JViewport)) {
+        if (!(ancestor instanceof JViewport)) {
             //Exception e = new Exception(
             //    "AgentCanvas instance must be within JScrollPane instance");
             //e.printStackTrace();
@@ -135,8 +124,8 @@ class AgentCanvas extends JPanel {
 
         // determine the starting (x,y) in the viewport where the image
         // will be drawn
-        viewportX = (int) Math.max((viewportWidth - renderWidth) / 2, 0);
-        viewportY = (int) Math.max((viewportHeight - renderHeight) / 2, 0);
+        viewportX = Math.max((viewportWidth - renderWidth) / 2, 0);
+        viewportY = Math.max((viewportHeight - renderHeight) / 2, 0);
 
         // in case there was a previous image, clear things out
         graphics.clearRect(0, 0, viewportWidth, viewportHeight);
@@ -146,44 +135,14 @@ class AgentCanvas extends JPanel {
 
         // now draw the agents; note that the list of agents should be a
         // _protected_ (not private) instance variable within the simulation
-        int numAgents = simulation.agentList.size();
-        for (int i = 0; i < numAgents; i++) {
-            // the list of agents is
-            Agent a = simulation.agentList.get(i);
-
-            // make sure not to draw any agent outside the image boundaries;
-            // remember that graphics x corresponds to column and graphics y
-            // corresponds to row
-            if ((a.getRow() >= 0) && (a.getCol() >= 0) &&
-                    ((a.getRow() * agentSize) + agentSize <= renderHeight) &&
-                    ((a.getCol() * agentSize) + agentSize <= renderWidth)) {
-                int guiX = viewportX + (a.getCol() * agentSize);
-                int guiY = viewportY + (a.getRow() * agentSize);
-
-                // set the color we'll use to draw the agent
-                graphics.setPaint(Color.red);
-                /*
-                if (a.needsToBeADifferentColor())
-                    graphics.setPaint(Color.red);
-                else
-                    graphics.setPaint(Color.blue);
-                */
-
-                graphics.fillOval(guiX, guiY, agentSize, agentSize);
-
-                /*
-                if (a.needsADotForSomeReason())
-                {
-                    // draw a little dot in the middle of the rendered agent
-                    int dotSize = 2;
-                    graphics.setPaint(Color.black);
-                    graphics.fillRect(guiX + ((agentSize - dotSize) / 2),
-                                      guiY + ((agentSize - dotSize) / 2),
-                                      dotSize, dotSize);
-                }
-                */
-            }
-        }
+        simulation.agentList.stream().filter(a -> (a.getRow() >= 0) && (a.getCol() >= 0) &&
+                ((a.getRow() * agentSize) + agentSize <= renderHeight) &&
+                ((a.getCol() * agentSize) + agentSize <= renderWidth)).forEach(a -> {
+            int guiX = viewportX + (a.getCol() * agentSize);
+            int guiY = viewportY + (a.getRow() * agentSize);
+            graphics.setPaint(Color.red);
+            graphics.fillOval(guiX, guiY, agentSize, agentSize);
+        });
 
         // draw the grid last so that it will overlay the agent squares
         drawGrid(graphics, viewportX, viewportY, renderWidth, renderHeight);
@@ -234,14 +193,17 @@ class AgentCanvas extends JPanel {
 
         // the columns
         int agentSize = AgentCanvas.agentGUISize;
-        for (int row = 0; row < width / agentSize; row++)
-            graphics.drawLine(x + (row * agentSize), y,
-                    x + (row * agentSize), y + height - 1);
+        IntStream.range(0, width / agentSize)
+            .forEach(row ->
+                graphics.drawLine(x + (row * agentSize), y,
+                x + (row * agentSize), y + height - 1)
+            );
 
         // the rows
-        for (int col = 0; col < height / agentSize; col++)
-            graphics.drawLine(x, y + (col * agentSize),
-                    x + width - 1, y + (col * agentSize));
+        IntStream.range(0, height / agentSize)
+            .forEach(col ->
+                graphics.drawLine(x, y + (col * agentSize),
+                x + width - 1, y + (col * agentSize)));
 
         // the border
         graphics.drawLine(x, y, x, y + height);
