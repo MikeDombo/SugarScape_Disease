@@ -53,7 +53,7 @@ class SimulationManager extends GUIManager {
 
         ArrayList<Disease> diseaseList = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
-            diseaseList.add(new Disease(rand01String(rng.nextInt(10) + 1), rng.nextDouble()));
+            diseaseList.add(new Disease(rand01String(rng.nextInt(10) + 1), rng.nextDouble()+1));
         }
 
         agentList.forEach(a -> a.infectWith(diseaseList.get(rng.nextInt(diseaseList.size()))));
@@ -101,11 +101,11 @@ class SimulationManager extends GUIManager {
     }
 
     private Event getNewMutate(double time, String target) {
-        return new Event(time + exponential(1), "mutate", target);
+        return new Event(time + uniform(3, 7), "mutate", target);
     }
 
     private Event getNewImmuneResponse(double time, String target) {
-        return new Event(time + exponential(1), "immuneResponse", target);
+        return new Event(time + Math.abs(rng.nextGaussian()+1), "immuneResponse", target);
     }
 
     private Agent generateAgent() {

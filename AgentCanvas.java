@@ -135,14 +135,22 @@ class AgentCanvas extends JPanel {
 
         // now draw the agents; note that the list of agents should be a
         // _protected_ (not private) instance variable within the simulation
-        simulation.agentList.stream().filter(a -> (a.getRow() >= 0) && (a.getCol() >= 0) &&
-                ((a.getRow() * agentSize) + agentSize <= renderHeight) &&
-                ((a.getCol() * agentSize) + agentSize <= renderWidth)).forEach(a -> {
-            int guiX = viewportX + (a.getCol() * agentSize);
-            int guiY = viewportY + (a.getRow() * agentSize);
-            graphics.setPaint(Color.red);
-            graphics.fillOval(guiX, guiY, agentSize, agentSize);
-        });
+        for (Agent a : simulation.agentList) {
+            if ((a.getRow() >= 0) && (a.getCol() >= 0) &&
+                    ((a.getRow() * agentSize) + agentSize <= renderHeight) &&
+                    ((a.getCol() * agentSize) + agentSize <= renderWidth)) {
+                int guiX = viewportX + (a.getCol() * agentSize);
+                int guiY = viewportY + (a.getRow() * agentSize);
+
+                if (a.isInfected()) {
+                    graphics.setPaint(Color.red);
+                } else {
+                    graphics.setPaint(Color.blue);
+                }
+
+                graphics.fillOval(guiX, guiY, agentSize, agentSize);
+            }
+        }
 
         // draw the grid last so that it will overlay the agent squares
         drawGrid(graphics, viewportX, viewportY, renderWidth, renderHeight);

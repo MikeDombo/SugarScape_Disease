@@ -27,6 +27,10 @@ public class Agent {
         eventList.add(new Event(birthTime + maxAge, "death", id));
     }
 
+    public boolean isInfected(){
+        return !this.infectedWith.isEmpty();
+    }
+
     private boolean immuneTo(Disease d) {
         return HammingDistance.getMinHammingDistance(immuneSystem, d.getGenome())[0] == 0;
     }
