@@ -1,4 +1,4 @@
-public class Cell implements Comparable {
+public class Cell implements Comparable<Cell> {
 
     private final double resourceCapacity;
     private final double regrowthRate;
@@ -49,10 +49,7 @@ public class Cell implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        if (!(o instanceof Cell)) {
-            return 0;
-        }
+    public int compareTo(Cell o) {
         if (this.resourceCapacity == ((Cell) o).getCapacity()) {
             return 0;
         }

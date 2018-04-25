@@ -130,7 +130,7 @@ public class Agent {
         lookEast.removeIf(Cell::isOccupied);
         lookWest.removeIf(Cell::isOccupied);
 
-        ArrayList<Cell> allOptions = new ArrayList<>();
+        List<Cell> allOptions = new ArrayList<>();
         allOptions.addAll(lookNorth);
         allOptions.addAll(lookSouth);
         allOptions.addAll(lookEast);
