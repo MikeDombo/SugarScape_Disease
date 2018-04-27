@@ -211,7 +211,7 @@ class SimulationManager extends GUIManager {
             canvas.repaint();
 
             try {
-                Thread.sleep(5);
+                Thread.sleep(2);
             } catch (Exception ignored) {
             }
         }
