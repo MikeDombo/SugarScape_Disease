@@ -23,4 +23,4 @@ When experimenting with the agent's immune response to a disease, we noticed how
 In addition to agents attacking their diseases, their immune systems also randomly mutate, flip one bit in their immune system, with an even drawn from a uniform 3, 7.
 We decided that random mutations should be truly random, so the time is drawn from a uniform distribution. We then selected the bounds of the mutation such that over
 the average agent lifetime there would be, on average, 20 such mutations. Because the mutations are completely random they can aid the agent in attacking a disease, or
-they may hinder the progress. Increasing the event rate causes noticeably more healthy agents, especially around the high sugar areas.
+they may hinder the progress. Increasing the event rate causes noticeably more healthy agents, especially around the high sugar areas which previously had even more disease.
