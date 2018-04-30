@@ -2,7 +2,7 @@ public class Cell implements Comparable<Cell> {
 
     private final double resourceCapacity;
     private final double regrowthRate;
-    private double lastTimeDepleted = 0;
+    private double lastTimeDepleted;
     private boolean occupied;
     private final int x;
     private final int y;
@@ -12,6 +12,7 @@ public class Cell implements Comparable<Cell> {
         this.regrowthRate = regrowthRate;
         this.x = x;
         this.y = y;
+        this.lastTimeDepleted = 0;
     }
 
     public double getRegrowthRate() {
@@ -39,6 +40,9 @@ public class Cell implements Comparable<Cell> {
     }
 
     public double getResourceLevel(double time) {
+        if(lastTimeDepleted == 0){
+            return this.resourceCapacity;
+        }
         return Math.min(this.resourceCapacity, (time - lastTimeDepleted) * this.regrowthRate);
     }
 

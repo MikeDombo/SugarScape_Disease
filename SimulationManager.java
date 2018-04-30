@@ -3,15 +3,48 @@ import squint.*;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.util.*;
+import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 class SimulationManager extends GUIManager {
+    private Random rng;
+
+    /*
+     * Parameters to control diseases and agent response to diseases
+     */
+    private static final int MAX_DISEASES = 12;
+    private final IntSupplier nextDiseaseGenomeLength = () -> {
+        return rng.nextInt(10) + 1;
+    };
+    private final DoubleSupplier nextDiseaseMetabolicPenalty = () -> {
+        return rng.nextDouble() + 1;
+    };
+    private final IntSupplier nextAgentImmuneLength = () -> {
+        return 50;
+    };
+    private final boolean SHOW_CURRENT_CELL_RESOURCE_LEVEL = true;
+
+    private Event getNewMutate(double time, String target) {
+        return new Event(time + uniform(3, 7), "mutate", target);
+    }
+    private Event getNewImmuneResponse(double time, String target) {
+        return new Event(time + Math.abs(rng.nextGaussian()+1), "immuneResponse", target);
+    }
+
+    /*
+     * Agent parameters
+     */
+    private final IntSupplier nextAgentVision = () -> rng.nextInt(6) + 1;
+    private final DoubleSupplier nextAgentMetabolicRate = () -> uniform(1, 4);
+    private final DoubleSupplier nextAgentInitialWealth = () -> uniform(5, 25);
+    private final DoubleSupplier nextAgentMaxAge = () -> uniform(60, 100);
+
     final ArrayList<Agent> agentList;
     final Landscape landscape;
     final int gridSize;
     private AgentCanvas canvas;  // the canvas on which agents are drawn
-    private final Random rng;
     private int nextAgentID = 0;
     private final PriorityQueue<Event> eventCalendar = new PriorityQueue<>();
     private double time;  // the simulation time
@@ -29,7 +62,9 @@ class SimulationManager extends GUIManager {
     }
 
     private String rand01String(int length) {
-        return IntStream.range(0, length).mapToObj(i -> String.valueOf(rand01())).collect(Collectors.joining());
+        return IntStream.range(0, length)
+                        .mapToObj(i -> String.valueOf(rand01()))
+                        .collect(Collectors.joining());
     }
 
     //======================================================================
@@ -49,16 +84,20 @@ class SimulationManager extends GUIManager {
 
         this.time = 0;   // initialize the simulation clock
 
+        // Generate all the agents
         IntStream.range(0, numAgents).forEach(i -> generateAgent());
 
-        ArrayList<Disease> diseaseList = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            diseaseList.add(new Disease(rand01String(rng.nextInt(10) + 1), rng.nextDouble()+1));
-        }
+        // Generate all diseases that will exist
+        ArrayList<Disease> diseaseList = IntStream.range(0, MAX_DISEASES)
+                .mapToObj(i -> new Disease(rand01String(nextDiseaseGenomeLength.getAsInt()), nextDiseaseMetabolicPenalty.getAsDouble()))
+                .collect(Collectors.toCollection(ArrayList::new));
 
+        // Infect each agent with a random disease
         agentList.forEach(a -> a.infectWith(diseaseList.get(rng.nextInt(diseaseList.size()))));
 
         this.createWindow();
+
+        eventCalendar.add(new Event(0, "repaint", "all"));
         this.run();
     }
 
@@ -87,7 +126,7 @@ class SimulationManager extends GUIManager {
         this.createWindow(WINDOW_WIDTH, WINDOW_HEIGHT);
         contentPane.setLayout(new BorderLayout()); // java.awt.*
 
-        canvas = new AgentCanvas(this);
+        canvas = new AgentCanvas(this, SHOW_CURRENT_CELL_RESOURCE_LEVEL);
         contentPane.add(new JScrollPane(canvas), BorderLayout.CENTER);
     }
 
@@ -100,17 +139,10 @@ class SimulationManager extends GUIManager {
         return this.time;
     }
 
-    private Event getNewMutate(double time, String target) {
-        return new Event(time + uniform(3, 7), "mutate", target);
-    }
-
-    private Event getNewImmuneResponse(double time, String target) {
-        return new Event(time + Math.abs(rng.nextGaussian()+1), "immuneResponse", target);
-    }
-
     private Agent generateAgent() {
-        Agent a = new Agent("agent " + (nextAgentID++), rng.nextInt(6) + 1,
-                uniform(1, 4), uniform(5, 25), uniform(60, 100), this.time, rand01String(50));
+        Agent a = new Agent("agent " + (nextAgentID++), nextAgentVision.getAsInt(),
+                nextAgentMetabolicRate.getAsDouble(), nextAgentInitialWealth.getAsDouble(),
+                nextAgentMaxAge.getAsDouble(), this.time, rand01String(nextAgentImmuneLength.getAsInt()));
         agentList.add(a);
 
         int[] nextUnoccupied = getNewUnoccupiedCell(gridSize);
@@ -206,13 +238,14 @@ class SimulationManager extends GUIManager {
                     }
                     break;
                 }
-            }
-
-            canvas.repaint();
-
-            try {
-                Thread.sleep(2);
-            } catch (Exception ignored) {
+                case "repaint": {
+                    canvas.repaint();
+                    eventCalendar.add(new Event(this.time + 0.05, "repaint", "all"));
+                    try {
+                        Thread.sleep(100);
+                    } catch (Exception ignored) {}
+                    break;
+                }
             }
         }
         System.out.println("No more events");

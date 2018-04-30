@@ -17,6 +17,7 @@ class AgentCanvas extends JPanel {
     private int gridWidth;   // width of grid in cells
     private int gridHeight;  // height of grid in cells
     private double maxCapacity; // max resource capacity of any cell
+    private boolean showCurrentCapacity = false;
 
     private static final int agentGUISize = 10;
 
@@ -27,8 +28,9 @@ class AgentCanvas extends JPanel {
     //* Constructor for the agent canvas.  Needs a reference to the
     //* simulation manager.
     //======================================================================
-    public AgentCanvas(SimulationManager theSimulation) {
+    public AgentCanvas(SimulationManager theSimulation, boolean printCurrentCapacity) {
         simulation = theSimulation;
+        showCurrentCapacity = printCurrentCapacity;
         updateGrid();
     }
 
@@ -180,7 +182,8 @@ class AgentCanvas extends JPanel {
 
                 // set the color we'll use to draw the agent -- green scaled relative
                 // to maximum landscape capacity
-                double capacity = simulation.landscape.getCellAt(r, c).getCapacity();
+                Cell cell = simulation.landscape.getCellAt(r, c);
+                double capacity = showCurrentCapacity ? cell.getResourceLevel(simulation.getTime()) : cell.getCapacity();
                 Color color = new Color(0, (int) (255 * capacity / this.maxCapacity), 0);
                 graphics.setPaint(color);
 
@@ -228,8 +231,11 @@ class AgentCanvas extends JPanel {
         final int verticalSpaceBeforeText = 20;
 
         DecimalFormat df = new DecimalFormat("0.00");
-        String info = "Time: " + df.format(simulation.getTime()) + "  " +
-                "Agents: " + simulation.agentList.size();
+
+        String info = "Time: " + df.format(simulation.getTime()) + " " +
+                "Agents: " + simulation.agentList.size() + " " +
+                "Healthy: " + simulation.agentList.stream().filter(a -> !a.isInfected()).count() + " " +
+                "Infected: " + simulation.agentList.stream().filter(Agent::isInfected).count();
 
         // Find the size of string in the font being used by the current
         // Graphics2D context.
