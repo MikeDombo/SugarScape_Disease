@@ -49,6 +49,10 @@ class SimulationManager extends GUIManager {
     private final PriorityQueue<Event> eventCalendar = new PriorityQueue<>();
     private double time;  // the simulation time
 
+    private final double maxTime;
+    private final boolean showGraphics;
+    private final int initialSeed;
+
     private double uniform(int a, int b) {
         return (rng.nextDouble() * (b - a)) + a;
     }
@@ -71,11 +75,22 @@ class SimulationManager extends GUIManager {
     //* public SimulationManager(int gridSize, int numAgents, int initialSeed)
     //======================================================================
     public SimulationManager(int gridSize, int numAgents, int initialSeed) {
+        this(gridSize, numAgents, initialSeed, 0, true);
+    }
+    public SimulationManager(int gridSize, int numAgents, int initialSeed, double maxTime) {
+        this(gridSize, numAgents, initialSeed, maxTime, true);
+    }
+
+    public SimulationManager(int gridSize, int numAgents, int initialSeed, double maxTime, boolean graphics) {
+        this.maxTime = maxTime;
+        this.showGraphics = graphics;
+
         if (numAgents >= (gridSize * gridSize)) {
             System.err.println("Too many agents for the given gridSize!");
             System.exit(1);
         }
 
+        this.initialSeed = initialSeed;
         rng = new Random(initialSeed);
         this.landscape = new Landscape(gridSize, rng);
 
@@ -95,7 +110,9 @@ class SimulationManager extends GUIManager {
         // Infect each agent with a random disease
         agentList.forEach(a -> a.infectWith(diseaseList.get(rng.nextInt(diseaseList.size()))));
 
-        this.createWindow();
+        if(showGraphics) {
+            this.createWindow();
+        }
 
         eventCalendar.add(new Event(0, "repaint", "all"));
         this.run();
@@ -163,7 +180,7 @@ class SimulationManager extends GUIManager {
     //* This is where your main simulation event engine code should go...
     //======================================================================
     public void run() {
-        while (!eventCalendar.isEmpty()) {
+        while (!eventCalendar.isEmpty() && (maxTime == 0 || time < maxTime)) {
             Event next = eventCalendar.poll();
             assert next != null;
             switch (next.getType()) {
@@ -239,16 +256,22 @@ class SimulationManager extends GUIManager {
                     break;
                 }
                 case "repaint": {
-                    canvas.repaint();
-                    eventCalendar.add(new Event(this.time + 0.05, "repaint", "all"));
-                    try {
-                        Thread.sleep(100);
-                    } catch (Exception ignored) {}
+                    if(showGraphics) {
+                        canvas.repaint();
+                        eventCalendar.add(new Event(this.time + 0.05, "repaint", "all"));
+                        try {
+                            Thread.sleep(100);
+                        } catch (Exception ignored) {
+                        }
+                    }
                     break;
                 }
             }
         }
-        System.out.println("No more events");
+
+        if(!showGraphics){
+            System.out.println(agentList.stream().filter(a -> !a.isInfected()).count() + "," + agentList.stream().filter(Agent::isInfected).count());
+        }
     }
 
 
@@ -260,6 +283,15 @@ class SimulationManager extends GUIManager {
     //* running...
     //======================================================================
     public static void main(String[] args) {
-        new SimulationManager(40, 400, 8675309);
+        if(args.length == 0){
+            new SimulationManager(40, 400, 8675309, 0, true);
+        }
+        else {
+            Random tRand = new Random(8675309);
+            IntStream.range(0, 50)
+                    .forEach(i ->
+                            new SimulationManager(40, 400, tRand.nextInt(Integer.MAX_VALUE), 100, false)
+                    );
+        }
     }
 }
