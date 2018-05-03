@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 class SimulationManager extends GUIManager {
+    public static int numHealthy = 0;
     private Random rng;
 
     /*
@@ -271,6 +272,7 @@ class SimulationManager extends GUIManager {
 
         if(!showGraphics){
             System.out.println(agentList.stream().filter(a -> !a.isInfected()).count() + "," + agentList.stream().filter(Agent::isInfected).count());
+            numHealthy += agentList.stream().filter(a -> !a.isInfected()).count();
         }
     }
 
@@ -292,6 +294,7 @@ class SimulationManager extends GUIManager {
                     .forEach(i ->
                             new SimulationManager(40, 400, tRand.nextInt(Integer.MAX_VALUE), 100, false)
                     );
+            System.out.println("Average Number of Healthy Agents: " + Math.round(numHealthy/50.0));
         }
     }
 }
