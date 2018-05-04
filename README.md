@@ -89,9 +89,12 @@ Genome Length	Healthy		Infected
 20				139			261
 40				135			265
 
+![genome_length](https://user-images.githubusercontent.com/14288345/39609901-7b6ecfac-4f1a-11e8-93ed-9831f0d22bac.png)
+
 This output confirms the assumptions that were made above that as the disease's genome
 length increases, the number of healthy agents in the system decreases because the
 chance that an agent is already immune to a disease decreases.
+
 
 Increasing the metabolic penalty of a disease results in agents dying off faster.
 Since every agent that dies is replaced by a new healthy agent, the number of
