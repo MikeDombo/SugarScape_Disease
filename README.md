@@ -48,12 +48,14 @@ penalty at 0.5, the mutation rate at 5, the immune response rate at 1, the numbe
 diseases at 12. The following numbers are some of the output we found
 for the number of healthy and infected agents on average when changing the length of
 the agent's immune system:
-Immune Length	Healthy		Infected
-10				141			259
-30				142			258
-50				145			255
-100				149			251
-150				152			248
+
+| Immune Length | Healthy | Infected |
+|---------------|---------|----------|
+| 10            | 141     | 259      |
+| 30            | 142     | 258      |
+| 50            | 145     | 255      |
+| 100           | 149     | 251      |
+| 150           | 152     | 248      |
 
 ![immune_response_rate](https://user-images.githubusercontent.com/14288345/39610162-8272fa1a-4f1c-11e8-9f5c-d5744f3f9edc.png)
 
@@ -85,11 +87,13 @@ metabolic penalty at 0.5, the mutation rate at 5, the immune response rate at 1,
 number of diseases at 12. The following numbers are some of the output we found
 for the number of healthy and infected agents on average when changing the length of
 the disease's genome length:
-Genome Length	Healthy		Infected
-5				305			95
-10				145			255
-20				139			261
-40				135			265
+
+| Genome Length | Healthy | Infected |
+|---------------|---------|----------|
+| 5             | 305     | 95       |
+| 10            | 145     | 255      |
+| 20            | 139     | 261      |
+| 40            | 135     | 265      |
 
 ![genome_length](https://user-images.githubusercontent.com/14288345/39609901-7b6ecfac-4f1a-11e8-93ed-9831f0d22bac.png)
 
@@ -110,12 +114,13 @@ disease genome length at 10, the mutation rate at 5, the immune response rate at
 number of diseases at 12. The following numbers are some of the output we found
 for the number of healthy and infected agents on average when changing the metabolic
 penalty for an agent being infected:
-Metabolic Penalty	Healthy		Infected
-0.1					87			313
-0.5					145			255
-1.5					216			184
-3					273			127
 
+| Metabolic Penalty | Healthy | Infected |
+|-------------------|---------|----------|
+| 0.1               | 87      | 313      |
+| 0.5               | 145     | 255      |
+| 1.5               | 216     | 184      |
+| 3                 | 273     | 127      |
 
 ![metabolic_penalty](https://user-images.githubusercontent.com/14288345/39610092-f5a1dffc-4f1b-11e8-8f6d-9e6a6059beeb.png)
 
@@ -139,11 +144,13 @@ disease genome length at 10, the metabolic penalty at 0.5, the mutation rate at 
 the number of diseases at 12. The following numbers are some of the output we found
 for the number of healthy and infected agents on average when changing the agent's
 immune response rate:
-Immune Response Rate	Healthy		Infected
-0.2						152			248
-1						145			255
-5						140			260
-15						137			263
+
+| Immune Response Rate | Healthy | Infected |
+|----------------------|---------|----------|
+| 0.2                  | 152     | 248      |
+| 1                    | 145     | 255      |
+| 5                    | 140     | 260      |
+| 15                   | 137     | 263      |
 
 ![immune_response_rate](https://user-images.githubusercontent.com/14288345/39610113-1d1f2c92-4f1c-11e8-9e68-a8225e265e17.png)
 
@@ -164,10 +171,12 @@ previously had even more disease.
 Given that this is how we decided our mutate function to run, the numbers of healthy
 and infected agents did not change dramatically as the mutation rate increased, which
 can be seen in the numbers below:
-Mutation Rate	Healthy		Infected
-0.5				143			257
-2				146			254
-5				145			255
-15				146			254
+
+| Mutation Rate | Healthy | Infected |
+|---------------|---------|----------|
+| 0.5           | 143     | 257      |
+| 2             | 146     | 254      |
+| 5             | 145     | 255      |
+| 15            | 146     | 254      |
 
 ![mutation_rate](https://user-images.githubusercontent.com/14288345/39610018-5908e69a-4f1b-11e8-874e-b87e3b565f7f.png)
