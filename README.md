@@ -55,7 +55,7 @@ Immune Length	Healthy		Infected
 100				149			251
 150				152			248
 
-![genome_length](https://user-images.githubusercontent.com/14288345/39609901-7b6ecfac-4f1a-11e8-93ed-9831f0d22bac.png)
+![immune_response_rate](https://user-images.githubusercontent.com/14288345/39610162-8272fa1a-4f1c-11e8-9f5c-d5744f3f9edc.png)
 
 This output confirms the assumptions that were made above that as the immune system
 length increased, the number of healthy agents in the system also increased. While
@@ -91,6 +91,7 @@ Genome Length	Healthy		Infected
 20				139			261
 40				135			265
 
+![genome_length](https://user-images.githubusercontent.com/14288345/39609901-7b6ecfac-4f1a-11e8-93ed-9831f0d22bac.png)
 
 This output confirms the assumptions that were made above that as the disease's genome
 length increases, the number of healthy agents in the system decreases because the
@@ -114,6 +115,9 @@ Metabolic Penalty	Healthy		Infected
 0.5					145			255
 1.5					216			184
 3					273			127
+
+
+![metabolic_penalty](https://user-images.githubusercontent.com/14288345/39610092-f5a1dffc-4f1b-11e8-8f6d-9e6a6059beeb.png)
 
 This output confirms the statements that were made above that as the metabolic penalty
 increases, the number of healthy agents in the system will increase. Initially, this
@@ -140,6 +144,8 @@ Immune Response Rate	Healthy		Infected
 1						145			255
 5						140			260
 15						137			263
+
+![immune_response_rate](https://user-images.githubusercontent.com/14288345/39610113-1d1f2c92-4f1c-11e8-9e68-a8225e265e17.png)
 
 This output shows that as the immune response rate is increased, the number of healthy
 agents in the landscape decreases. This is probably because the agents are able to cure
