@@ -55,6 +55,8 @@ Immune Length	Healthy		Infected
 100				149			251
 150				152			248
 
+![genome_length](https://user-images.githubusercontent.com/14288345/39609901-7b6ecfac-4f1a-11e8-93ed-9831f0d22bac.png)
+
 This output confirms the assumptions that were made above that as the immune system
 length increased, the number of healthy agents in the system also increased. While
 the numbers were not as drastic as we initially anticipated, the numbers still support
@@ -89,7 +91,6 @@ Genome Length	Healthy		Infected
 20				139			261
 40				135			265
 
-![genome_length](https://user-images.githubusercontent.com/14288345/39609901-7b6ecfac-4f1a-11e8-93ed-9831f0d22bac.png)
 
 This output confirms the assumptions that were made above that as the disease's genome
 length increases, the number of healthy agents in the system decreases because the
