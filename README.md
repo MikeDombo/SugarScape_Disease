@@ -5,23 +5,23 @@
 The project uses the Streams API, so Java 8 or greater is required to build and 
 run the project.
 
-To run the simulation, first build the project using javac -d build/production/Sim_Final_Proj -classpath "squintV2.19.jar" *.java Then, run the project using
+To run the simulation, first build the project using `javac -d build/production/Sim_Final_Proj -classpath "squintV2.19.jar" *.java` Then, run the project using
 
-Windows: java -classpath "build/production/Sim_Final_Proj;squintV2.19.jar" SimulationManager
+Windows: `java -classpath "build/production/Sim_Final_Proj;squintV2.19.jar" SimulationManager`
 
-Linux/Mac: java -classpath "build/production/Sim_Final_Proj:squintV2.19.jar" SimulationManager
+Linux/Mac: `java -classpath "build/production/Sim_Final_Proj:squintV2.19.jar" SimulationManager`
 
 ## Changing Parameters
 
-- Number of Diseases - `SimulationManager:14` - Currently set to 12
-- Disease Genome Length - `SimulationManager:16` - A lambda function which can return integers.
+- Number of Diseases - `SimulationManager:18` - Currently set to 12
+- Disease Genome Length - `SimulationManager:20` - A lambda function which can return integers.
 Currently returns a random uniform integer 1-11.
-- Disease Metabolic Penalty - `SimulationManager:19` - A lambda function which returns doubles.
+- Disease Metabolic Penalty - `SimulationManager:23` - A lambda function which returns doubles.
 Currently returns a random uniform double 1-2.
-- Display the Current Cell Resource Level or Max Resource Level - `SimulationManager:27` - Initially true,
+- Display the Current Cell Resource Level or Max Resource Level - `SimulationManager:28` - Initially true,
 shows the current level. Set to false to show the maximum level.
-- Frequency of Random Immune Mutation - `SimulationManager:30` - Currently random uniform double from 3-7. 
-- Frequency of Immune Disease Response - `SimulationManager:33` - Currently a random normal with
+- Frequency of Random Immune Mutation - `SimulationManager:31` - Currently random uniform double from 3-7. 
+- Frequency of Immune Disease Response - `SimulationManager:34` - Currently a random normal with
 mean of 1. `Math.abs` is used to make all times in the future.
 
 ## Our Experiments
