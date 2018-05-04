@@ -162,3 +162,5 @@ Mutation Rate	Healthy		Infected
 2				146			254
 5				145			255
 15				146			254
+
+![mutation_rate](https://user-images.githubusercontent.com/14288345/39610018-5908e69a-4f1b-11e8-874e-b87e3b565f7f.png)
