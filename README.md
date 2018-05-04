@@ -11,7 +11,7 @@ Windows: `java -classpath "build/production/Sim_Final_Proj;squintV2.19.jar" Simu
 
 Linux/Mac: `java -classpath "build/production/Sim_Final_Proj:squintV2.19.jar" SimulationManager`
 
-Alternative way to run on Linux/Mac: First, make sure you are in the directory that contains the files. Then run `javac -classpath squintV2.19.jar *.java` to compile. Once compiled, run java -cp  `squintV2.19.jar:Sim_Final_proj/*:. SimulationManager` to execute the program. 
+Alternative way to run on Linux/Mac: First, make sure you are in the directory that contains the files. Then run `javac -classpath squintV2.19.jar *.java` to compile. Once compiled, run `java -cp  squintV2.19.jar:Sim_Final_proj/*:. SimulationManager` to execute the program. 
 
 
 ## Changing Parameters
