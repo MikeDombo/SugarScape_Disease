@@ -150,6 +150,7 @@ agents in the landscape decreases. This is probably because the agents are able 
 themselves and stick around longer. Whereas, others die and are reborn as healthy. 
 
 
+
 In addition to agents attacking their diseases, their immune systems also randomly 
 mutate, flip one bit in their immune system, with an even drawn from a uniform 3, 7.
 We decided that random mutations should be truly random, so the time is drawn from 
