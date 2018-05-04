@@ -57,7 +57,9 @@ the agent's immune system:
 | 100           | 149     | 251      |
 | 150           | 152     | 248      |
 
-![immune_response_rate](https://user-images.githubusercontent.com/14288345/39610162-8272fa1a-4f1c-11e8-9f5c-d5744f3f9edc.png)
+![immune_systems_lenght](https://user-images.githubusercontent.com/14288345/39610792-c3f47c62-4f20-11e8-9bc7-5f77689e913e.png)
+
+
 
 This output confirms the assumptions that were made above that as the immune system
 length increased, the number of healthy agents in the system also increased. While
