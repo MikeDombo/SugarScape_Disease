@@ -5,10 +5,11 @@
 The project uses the Streams API, so Java 8 or greater is required to build and 
 run the project.
 
-To run the simulation, first build the project using 
-`javac -d ./build/production/Sim_Final_Proj -classpath "./squintV2.19.jar" *.java`
-Then, run the project using 
-`java -classpath "./build/production/Sim_Final_Proj:./squintV2.19.jar" SimulationManager`
+To run the simulation, first build the project using javac -d build/production/Sim_Final_Proj -classpath "squintV2.19.jar" *.java Then, run the project using
+
+Windows: java -classpath "build/production/Sim_Final_Proj;squintV2.19.jar" SimulationManager
+
+Linux/Mac: java -classpath "build/production/Sim_Final_Proj:squintV2.19.jar" SimulationManager
 
 ## Changing Parameters
 
