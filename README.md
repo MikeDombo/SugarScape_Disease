@@ -1,5 +1,7 @@
 # Simulation Final Project -- Agent-based Simulation with Disease
 
+Michael Dombrowski, Taina Dumay, Stephanie Poinsatte
+
 ## Running
 
 The project uses the Streams API, so Java 8 or greater is required to build and 
